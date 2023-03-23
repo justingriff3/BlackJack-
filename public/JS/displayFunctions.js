@@ -154,6 +154,7 @@ const btnSize = Math.floor(btncHeight*0.6),
   const vertGap = btncHeight/20;
 
   optionButtonsMap.set("Play",{img:'RedButtonMain',x:cWidth/2-1.5*btnSize, y:vertGap, w:3*btnSize, h:btncHeight*0.4});
+  optionButtonsMap.set("Strategy Card",{img:'RedButtonMain',x:cWidth/1.9+1.5*btnSize, y:30, w:2*btnSize, h:btncHeight*0.4});
   optionButtonsMap.set("Clear Bet",{img:'RedButtonMain',x:cWidth/2-1.5*btnSize, y:btncHeight/2, w:3*btnSize, h:btncHeight*0.4});
   optionButtonsMap.set("Double",{img:'BlueCircle',x:cWidth/2+btnSize, y:btnYPos, w:btnSize, h:btnSize});
   optionButtonsMap.set("Surrender",{img:'WhiteCircle',x:cWidth/2-2*btnSize, y:btnYPos, w:btnSize, h:btnSize});
@@ -187,11 +188,13 @@ function drawPlayBetBtns(){
   let fontSize = btncHeight/5;
   BTNctx.font = fontSize+'px Chela';
   BTNctx.clearRect(cWidth/2-btnSize*2,0,btnSize*5,btncHeight);
+  drawBtnImg('Strategy Card');
   drawBtnImg('Play'); drawBtnImg('Clear Bet');
 
   if(account.bet<minBet){
     let betDif = minBet-account.bet;
     writeBtnMsg('Play', 'Bet at least '+betDif+' more'); writeBtnMsg('Clear Bet');
+    writeBtnMsg('Strategy Card', 'STRATEGY CARD ');
   }else{
     if(rebet){
       writeBtnMsg('Play', 'Rebet & Play'); writeBtnMsg('Clear Bet', 'New Bet');

@@ -7,6 +7,7 @@ let rebet = false;
 let playingGame = false;
 let insuranceOpt = false;
 let checkingCard = false;
+let strategyCard = false;
 
 function Hand(cards=[], val=0, nAces=0){
   this.cards = cards;
