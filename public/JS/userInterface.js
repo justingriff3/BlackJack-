@@ -64,6 +64,14 @@ btnCanvas.addEventListener('click', function(evt){
               account.balance-=account.bet;}
               displayBalance();
             }
+          }else if(isInside(mousePos, optionButtonsMap.get("Strategy Card"))){
+            if(!strategyCard){
+              strategyCard = true;
+              console.log("Strategy Card On");
+            } else {
+              strategyCard = false;
+              console.log("Strategy Card Off");
+            }
           }else if(rebet===false){
             if(isInside(mousePos,optionButtonsMap.get('Clear Bet'))){
               pHand.bet = account.bet=0;
