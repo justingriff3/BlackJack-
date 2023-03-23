@@ -62,6 +62,7 @@ function playerCardRow(cards, total){
     return rows.indexOf(handswtich)
 }
 
+/*Gets the best decision message accepting array of players cards, total of the cards added up, dealer's first card as a string*/ 
 function getMessage(player, total, dealer){
     decision = strategy_card[playerCardRow(player,total)][dealerColumn(dealer)]
     if (decision == "H"){
