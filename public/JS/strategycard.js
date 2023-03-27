@@ -13,33 +13,55 @@ function readCsv(){
 }
 /* returns the column for the dealer's card */
 function dealerColumn(card){
-    return strategy_card[0].indexOf(card)
+    if (card.length == 3 || card[0] == "J"|| card[0] == "Q"|| card[0] == "K"){
+        return strategy_card[0].indexOf(String(10))
+    }
+    return strategy_card[0].indexOf(String(card[0]))
 }
 /* returns the row for the player's hand */
 function playerCardRow(cards, total){ 
-    
-    card1 = cards[0][0]
-    card2 = cards[1][0]
-    if (cards[0].legnth == 3 || cards[0][0] == "J"|| cards[0][0] == "Q"|| cards[0][0] == "K"){
-        card1 = "10"
+    ret = ""
+    if (cards.length == 2){
+        if (cards[0][0] == cards [1][0]){
+            if (cards[1].length > 2 || cards[1] == 'K' || cards[1] == 'Q' || cards[1] == 'J'){
+                return 19
+            }
+            else if (cards[0][0]== 'A'){
+                return 20
+            }
+            else {
+                return 9 + parseInt(cards[1][0])
+            }
+        }
+        if (cards[0][0] == 'A'){
+            if (cards[1].length > 2 || cards[1] == 'K' || cards[1] == 'Q' || cards[1] == 'J'){
+                return 29
+            }
+            else {
+                return 19 + parseInt(cards[1][0])
+            }
+        } else if (cards[1][0] == 'A') {
+            if (cards[0].length > 2 || cards[0] == 'K' || cards[0] == 'Q' || cards[0] == 'J'){
+                return 29
+            }
+            else {
+                return 19 + parseInt(cards[0][0])
+            }
+        }
     }
-    if (cards[1].legnth == 3 || cards[1][0] == "J"|| cards[1][0] == "Q"|| cards[1][0] == "K"){
-        card2 = "10"
+    if (total >= 17) {
+        ret = rows.indexOf(String(17))
+    } else if (total <=8){
+        ret = rows.indexOf(String(8))
+    } else {
+        ret = rows.indexOf(String(total))
     }
-    hand = card1 + "," + card2
-    handswitch = card2 + "," + card1
-    if ((rows.indexOf(hand) == -1 && rows.indexOf(handswitch) == -1) || cards.length > 2){
-        return rows.indexOf(String(total))
-    }
-    
-    if (rows.indexOf(handswitch) == -1)
-        return rows.indexOf(hand)
-    return rows.indexOf(handswtich)
+    return ret
 }
 
 /*Gets the best decision message accepting array of players cards, total of the cards added up, dealer's first card as a string*/ 
 function getMessage(player, total, dealer){
-    decision = strategy_card[playerCardRow(player,total)][dealerColumn(dealer)]
+    var decision = strategy_card[playerCardRow(player, total)][dealerColumn(dealer[1])]
     if (decision == "H"){
         return "You should Hit"
     }

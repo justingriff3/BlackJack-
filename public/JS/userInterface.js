@@ -13,7 +13,6 @@ function isInside(pos, rect){
 }
 
 btnCanvas.addEventListener('click', function(evt){
-
   let mousePos = getMousePos(btnCanvas,evt);
     if(insuranceOpt===true){
       if(isInside(mousePos,optionButtonsMap.get('Yes'))){
@@ -31,6 +30,32 @@ btnCanvas.addEventListener('click', function(evt){
       gctx.clearRect(0,cHeight*0.3,cWidth,cHeight*0.4);//in case insufficient balance is displayed
       if(checkingCard==false){
         if(playingGame===true){
+          if(!strategyCard){
+            if(isInside(mousePos,optionButtonsMap.get('Hit'))){
+              hit(pHand,0,curHand,true,()=>{
+                if(pHand.value<21){glassBtnCanvas.style.zIndex = -1;}
+                else if(pHand.value==21){stand();}
+                drawButtons();
+              });
+              // let totHands = pHandsArr.length;
+            }else if(isInside(mousePos,optionButtonsMap.get('Stand'))){
+              stand();
+            }else if(pHand.cards.length==2){
+              if(isInside(mousePos,optionButtonsMap.get('Double'))){
+                if(checkBalance(account.bet)){
+                  doubleDown();
+                }
+              }
+              else if(isInside(mousePos,optionButtonsMap.get('Surrender'))){surrender(pHand);}
+              else if(pHand.cards[0][0]==pHand.cards[1][0]&&isInside(mousePos,optionButtonsMap.get('Split'))){
+                if(checkBalance(account.bet)){
+                  split();
+                }
+              }
+            }
+            if(!isInside(mousePos,optionButtonsMap.get('Split'))){displayPointer();}
+        } else {
+          console.log(getMessage(pHand.cards, pHand.value, dHand.cards))
           if(isInside(mousePos,optionButtonsMap.get('Hit'))){
             hit(pHand,0,curHand,true,()=>{
               if(pHand.value<21){glassBtnCanvas.style.zIndex = -1;}
@@ -54,6 +79,7 @@ btnCanvas.addEventListener('click', function(evt){
             }
           }
           if(!isInside(mousePos,optionButtonsMap.get('Split'))){displayPointer();}
+        }
         }else{
           //options for new hand
           if(isInside(mousePos,optionButtonsMap.get('Play'))&&account.bet>=minBet){
