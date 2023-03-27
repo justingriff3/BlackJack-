@@ -1,4 +1,3 @@
-
 const globalRate = 40;
 const globalWait = Math.floor(globalRate/2);
 

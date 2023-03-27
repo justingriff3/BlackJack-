@@ -13,6 +13,7 @@ function isInside(pos, rect){
 }
 
 btnCanvas.addEventListener('click', function(evt){
+
   let mousePos = getMousePos(btnCanvas,evt);
     if(insuranceOpt===true){
       if(isInside(mousePos,optionButtonsMap.get('Yes'))){
@@ -66,6 +67,8 @@ btnCanvas.addEventListener('click', function(evt){
             }
           }else if(isInside(mousePos, optionButtonsMap.get("Strategy Card"))){
             if(!strategyCard){
+              if(strategy_card.length== 0)
+                readCsv()
               strategyCard = true;
               console.log("Strategy Card On");
             } else {

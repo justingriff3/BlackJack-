@@ -3,38 +3,13 @@ const rows = ["Hands","8","9", "10", "11", "12", "13", "14","15", "16", "17", "2
 var strategy_card = []
 
 function readCsv(){
-  const fs = require('fs')
-  const content = fs.readFileSync('Blackjack Strategy Table.csv', 'utf-8')
-  
-  content.split("\r\n").forEach((line) => {
-      if (line.split(",").length > 11){
-        array = line.split(",")
-        var newarray = []
-        var letter1= array[0][1]
-        var letter2= array[1][0]
-        if (array[0].length > 2){
-            letter1 = array[0][1] + array[0][2]
-        }
-        if (array[1].length > 2){
-            letter2 = array[1][0] + array[1][1]
-        }
-        newarray.push(letter1+","+letter2)
-        startlength = letter2.length+ letter1.length
-        if (letter1.length == 2)
-            startlength-=1
-            if (letter2.length == 2)
-            startlength-=1
-        for(let i = startlength; i < array.length; i++){
-            newarray.push(array[i])
-        }
-        strategy_card.push(newarray)
-      } else {
-        strategy_card.push(line.split(","))
-      }
-  });
-
-    // Remove the empty last row 
-    strategy_card.pop()
+    fetch('http://localhost:3000/strategy.csv')
+    .then(response => response.json())
+    .then(content => {
+        content.forEach(item => {
+            strategy_card.push(item)
+        })
+    });
 }
 /* returns the column for the dealer's card */
 function dealerColumn(card){
