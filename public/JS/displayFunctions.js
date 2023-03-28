@@ -78,6 +78,7 @@ Promise.all(promiseButtonsImgArr.concat(promiseChipSideViewImgArr).concat(promis
     BGBTNctx.drawImage(buttonsImgMap.get('ButtonBackground'),0,0,cWidth,btncHeight);//draws Background
     displayBalance();
     setBtnCtxProps();
+    homeScreen();
     drawChipButtons();
     drawPlayBetBtns();
   });
@@ -194,21 +195,29 @@ function drawPlayBetBtns(){
   if(account.bet<minBet){
     let betDif = minBet-account.bet;
     writeBtnMsg('Play', 'Bet at least '+betDif+' more'); writeBtnMsg('Clear Bet');
-    writeBtnMsg('Strategy Card', 'STRATEGY CARD ');
   }else{
     if(rebet){
       writeBtnMsg('Play', 'Rebet & Play'); writeBtnMsg('Clear Bet', 'New Bet');
     }else{
       writeBtnMsg('Play'); writeBtnMsg('Clear Bet');
     }
+    
   }
+  if(strategyCard == true){
+      writeBtnMsg('Strategy Card', 'TUTORIAL MODE ON');
+  } else {
+      writeBtnMsg('Strategy Card', 'TUTORIAL MODE OFF');
+  }
+}
+function homeScreen(){
+  //BTNctx.clearRect(cWidth/2-btnSize*2,0,btnSize*8,btncHeight);//clears previously drawn btns
 }
 
 function drawButtons(){
-  BTNctx.clearRect(cWidth/2-btnSize*2,0,btnSize*5,btncHeight);//clears previously drawn btns
+  BTNctx.clearRect(cWidth/2-btnSize*2,0,btnSize*8,btncHeight);//clears previously drawn btns
+  displayBalance();
   let fontSize = btncHeight/5;
   BTNctx.font = fontSize+'px Chela';
-
   if(insuranceOpt){
     strokeAndFillText(gctx,'Insurance?',cWidth/2,cHeight/2,cWidth*0.9);
     drawBtnImg('Yes'); drawBtnImg('No');
@@ -223,7 +232,7 @@ function drawButtons(){
       if(pHand.cards[0][0]==pHand.cards[1][0]&&pHandsArr.length<splitUpTo){
         drawSplitBtn();
       }
-    }
+    } 
   }else{drawPlayBetBtns();}
 }
 
@@ -315,7 +324,9 @@ function displayBalance(){
   let xPos = Math.floor(cWidth*0.825);
   BTNctx.textAlign = 'center';
   BTNctx.font= balFontSize+'px TheBlacklist';
-  BTNctx.clearRect(cWidth*0.75,0,cWidth*0.25,btncHeight);
+  console.log(cWidth*0.25)
+  console.log("Modified:", String((cWidth*0.25)-250));
+  BTNctx.clearRect(cWidth*0.75,0,(cWidth*0.25)-300,btncHeight);
   BTNctx.fillText('Balance',xPos,btncHeight*0.3);
   BTNctx.fillText(account.balance,xPos,btncHeight*0.7);
 }

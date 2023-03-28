@@ -101,6 +101,7 @@ btnCanvas.addEventListener('click', function(evt){
               strategyCard = false;
               console.log("Strategy Card Off");
             }
+            drawButtons()
           }else if(rebet===false){
             if(isInside(mousePos,optionButtonsMap.get('Clear Bet'))){
               pHand.bet = account.bet=0;
