@@ -1,9 +1,6 @@
-# BlackJack-Classic
+# BlackJack-Jackspot Enterprise
 
-HTML5 BlackJack
 
-Written in pure Vanilla Javascript with no third-party libraries
-Minimum working version. For personal use only.
 
 See deployed app here: https://black-jack-classic.vercel.app
 
@@ -11,9 +8,13 @@ See deployed app here: https://black-jack-classic.vercel.app
 
 ## Game Rules
 
-See game rules here:
+1)  Object of the Game The participant attemptss to beat the dealer by getting a count as close     to 21 as possile, without going over 21
 
-https://wizardofodds.com/games/blackjack/basics/
+2)  It is up to user if an ace is worth 1 or 11. Face cards are 10 and any other card is its pip     value.
+
+3)  Before the game begins, each player places a bet in chips.
+
+4)  
 
 ## Unique Game Features
 
