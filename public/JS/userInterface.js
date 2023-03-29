@@ -27,7 +27,13 @@ btnCanvas.addEventListener('click', function(evt){
         checkDealerBlackJack();
       }
     }else{
-      gctx.clearRect(0,cHeight*0.3,cWidth,cHeight*0.4);//in case insufficient balance is displayed
+      gctx.clearRect(0,cHeight*0.3,cWidth,cHeight*0.5);//in case insufficient balance is displayed
+      if(beginning == true){
+        displayBalance();
+        drawChipButtons();
+        drawPlayBetBtns();
+        beginning = false;
+      }
       if(checkingCard==false){
         if(playingGame===true){
           if(!strategyCard){
@@ -101,7 +107,7 @@ btnCanvas.addEventListener('click', function(evt){
               strategyCard = false;
               console.log("Strategy Card Off");
             }
-            drawButtons()
+            drawPlayBetBtns()
           }else if(rebet===false){
             if(isInside(mousePos,optionButtonsMap.get('Clear Bet'))){
               pHand.bet = account.bet=0;
