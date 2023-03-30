@@ -80,7 +80,7 @@ Promise.all(promiseButtonsImgArr.concat(promiseChipSideViewImgArr).concat(promis
     strokeAndFillText(gctx,'BlackJack Game',cWidth/2,(cHeight/2)*1.19,cWidth*0.9);
     gctx.font = Math.floor(cHeight/20)+"px TheBlacklist";
     strokeAndFillText(gctx,'Click Start to Begin',cWidth/2,(cHeight/2)*1.5,cWidth*0.9);
-    gctx.font = Math.floor(483)+"px TheBlacklist";
+    gctx.font = gctx.font = Math.floor(cHeight/6)+"px TheBlacklist";
     setBtnCtxProps();
     BTNctx.font = btncHeight/5 +'px Chela';
     drawBtnImg('Play');
@@ -365,8 +365,8 @@ function displayBalance(){
   let xPos = Math.floor(cWidth*0.85) ;
   BTNctx.textAlign = 'center';
   BTNctx.font= balFontSize+'px TheBlacklist';
-  BTNctx.clearRect(cWidth*0.76,0,cWidth*0.25,btncHeight);
-  BTNctx.fillText('Balance',xPos-50,btncHeight*0.3);
+  BTNctx.clearRect(cWidth*0.76,0,cWidth*0.3,btncHeight);
+  BTNctx.fillText('Balance',xPos,btncHeight*0.3);
   BTNctx.fillText(account.balance,xPos,btncHeight*0.7);
   if (!playingGame){
     drawPlayBetBtns()

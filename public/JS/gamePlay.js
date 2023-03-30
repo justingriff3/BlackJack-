@@ -48,9 +48,9 @@ function newGame(){
       checkingCard = true;
       glassBtnCanvas.style.zIndex = -1;
       drawButtons();
-    }//else if(exposedCardVal=='1'){
-      //checkDealerBlackJack();
-    //}
+    }else if(exposedCardVal=='1'){
+      checkDealerBlackJack();
+    }
     else{
       playingGame = true;
       checkBlackJack(pHand)

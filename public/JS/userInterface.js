@@ -15,7 +15,7 @@ function isInside(pos, rect){
 btnCanvas.addEventListener('click', function(evt){
   let mousePos = getMousePos(btnCanvas,evt);
     if(insuranceOpt===true){
-      /*if(isInside(mousePos,optionButtonsMap.get('Yes'))){
+      if(isInside(mousePos,optionButtonsMap.get('Yes'))){
         gctx.clearRect(0,0,cWidth,cHeight);
         console.log('yes clicked');
         if(checkBalance(account.bet/2)){
@@ -25,7 +25,7 @@ btnCanvas.addEventListener('click', function(evt){
         gctx.clearRect(0,0,cWidth,cHeight);
         console.log('no clicked');
         checkDealerBlackJack();
-      }*/
+      }
     }else{
       gctx.clearRect(0,cHeight*0.3,cWidth,cHeight*0.6);//in case insufficient balance is displayed
       if(beginning == true){
