@@ -34,7 +34,7 @@ function setBtnCtxProps(){
 }
 // setBtnCtxProps();
 
-const btnsPics = ['ButtonBackground.jpg','RedButtonMain.png', 'BlueCircle.png','RedCircle.png','GreenCircle.png','YellowCircle.png','WhiteCircle.png'];
+const btnsPics = ['ButtonBackground.jpg','RedButtonMain.png', 'BlueCircle.png','RedCircle.png', 'PurpleCircle.png','GreenCircle.png','YellowCircle.png','WhiteCircle.png'];
 
 const chipBtnsPics = [
   'WhiteChip1Top.png',
@@ -76,12 +76,10 @@ Promise.all(promiseButtonsImgArr.concat(promiseChipSideViewImgArr).concat(promis
   .then(document.fonts.load('12px Chela'))
   .then(()=>{
     BGBTNctx.drawImage(buttonsImgMap.get('ButtonBackground'),0,0,cWidth,btncHeight);//draws Background
-    console.log(gctx.font)
-    console.log(Math.floor(cHeight/30)+"px TheBlacklist")
-    strokeAndFillText(gctx,'JackPot Enterprises',cWidth/2,(cHeight/2)-150,cWidth*0.9);
-    strokeAndFillText(gctx,'BlackJack Game',cWidth/2,(cHeight/2)+75,cWidth*0.9);
+    strokeAndFillText(gctx,'JackPot Enterprises',cWidth/2,(cHeight/2)*.8,cWidth*0.9);
+    strokeAndFillText(gctx,'BlackJack Game',cWidth/2,(cHeight/2)*1.19,cWidth*0.9);
     gctx.font = Math.floor(cHeight/20)+"px TheBlacklist";
-    strokeAndFillText(gctx,'Click Start to Begin',cWidth/2,(cHeight/2)+300,cWidth*0.9);
+    strokeAndFillText(gctx,'Click Start to Begin',cWidth/2,(cHeight/2)*1.5,cWidth*0.9);
     gctx.font = Math.floor(483)+"px TheBlacklist";
     setBtnCtxProps();
     BTNctx.font = btncHeight/5 +'px Chela';
@@ -146,7 +144,7 @@ function drawPHandsArr(){//Draws each of the players hands
         strokeAndFillText(gctx,'BlackJack',pHandXLocs[i],pHandYLocs+cardH/2);
       }
     }
-    gctx.font = Math.flooer(cHeight/6)+"px TheBlacklist";
+    gctx.font = Math.floor(cHeight/6)+"px TheBlacklist";
 
   }
 }
@@ -164,14 +162,14 @@ const btnSize = Math.floor(btncHeight*0.6),
   const vertGap = btncHeight/20;
 
   optionButtonsMap.set("Play",{img:'RedButtonMain',x:cWidth/2-1.5*btnSize, y:vertGap, w:3*btnSize, h:btncHeight*0.4});
-  optionButtonsMap.set("Reveal Card",{img:'YellowCircle',x:(cWidth/1.9+1.5*btnSize)+800, y:50, w:btnSize, h:btnSize});
-  optionButtonsMap.set("Strategy Card",{img:'RedButtonMain',x:cWidth/1.9+1.5*btnSize, y:50, w:2*btnSize, h:btncHeight*0.4});
+  optionButtonsMap.set("Reveal Card",{img:'RedCircle',x:(cWidth/1.9+1.5*btnSize)*1.47, y:btnYPos, w:btnSize, h:btnSize});
+  optionButtonsMap.set("Strategy Card",{img:'RedButtonMain',x:cWidth/1.9+1.5*btnSize, y:btnYPos*1.5, w:2*btnSize, h:btncHeight*0.4});
   optionButtonsMap.set("Clear Bet",{img:'RedButtonMain',x:cWidth/2-1.5*btnSize, y:btncHeight/2, w:3*btnSize, h:btncHeight*0.4});
   optionButtonsMap.set("Double",{img:'BlueCircle',x:cWidth/2+btnSize, y:btnYPos, w:btnSize, h:btnSize});
   optionButtonsMap.set("Surrender",{img:'WhiteCircle',x:cWidth/2-2*btnSize, y:btnYPos, w:btnSize, h:btnSize});
-  optionButtonsMap.set("Split",{img:'YellowCircle',x:cWidth/2+btnSize*2, y:btnYPos, w:btnSize, h:btnSize});
+  optionButtonsMap.set("Split",{img:'PurpleCircle',x:cWidth/2+btnSize*2, y:btnYPos, w:btnSize, h:btnSize});
   optionButtonsMap.set("Hit",{img:'GreenCircle',x:cWidth/2, y:btnYPos, w:btnSize, h:btnSize});
-  optionButtonsMap.set("Stand",{img:'RedCircle',x:cWidth/2-btnSize, y:btnYPos, w:btnSize, h:btnSize});
+  optionButtonsMap.set("Stand",{img:'YellowCircle',x:cWidth/2-btnSize, y:btnYPos, w:btnSize, h:btnSize});
   optionButtonsMap.set("Yes",{img:'GreenCircle',x:cWidth/2, y:btnYPos, w:btnSize, h:btnSize});
   optionButtonsMap.set("No",{img:'RedCircle',x:cWidth/2-btnSize, y:btnYPos, w:btnSize, h:btnSize});
 
@@ -203,10 +201,10 @@ function drawPlayBetBtns(){
   let fontSize = btncHeight/5;
   BTNctx.font = fontSize+'px Chela';
   BTNctx.clearRect(cWidth/2-btnSize*2,0,btnSize*5,btncHeight);
-  drawBtnImg('Strategy Card');
+  drawBtnImg('Strategy Card'); 
   drawBtnImg('Play'); drawBtnImg('Clear Bet');
-  drawBtnImg('Reveal Card')
-
+  BTNctx.font = fontSize+12+'px Chela';
+  
   if(account.bet<minBet){
     let betDif = minBet-account.bet;
     writeBtnMsg('Play', 'Minimum Bet: '+ minBet); writeBtnMsg('Clear Bet');
@@ -218,13 +216,30 @@ function drawPlayBetBtns(){
     }
     
   }
+  
+  
   if(strategyCard == true){
-      writeBtnMsg('Strategy Card', 'TUTORIAL MODE ON');
+      writeBtnMsg('Strategy Card', 'Aid On');
+      
   } else {
-      writeBtnMsg('Strategy Card', 'TUTORIAL MODE OFF');
+      writeBtnMsg('Strategy Card', 'Aid Off');
   }
+ 
+  if (!playingGame){
+    //writeBtnMsg('Reveal Card', 'View Card');
+  } else{ 
+    drawBtnImg('Reveal Card');
+    writeBtnMsg('Reveal Card', 'Assist');
+  }
+  
 }
-
+function displayMessage(){
+  gctx.clearRect(cWidth/1.12,cHeight/2,cWidth/2,cHeight/2); //in case of previous blackjack
+  gctx.font = Math.floor(cHeight/18)+"px TheBlacklist";
+  strokeAndFillText(gctx,"Strategic Move:",cWidth/1.125,pHandYLocs);
+  strokeAndFillText(gctx,getMessage(pHand.cards, pHand.value, dHand.cards),cWidth/1.125,pHandYLocs*1.2);
+  ctx.font = Math.floor(483)+"px TheBlacklist";
+}
 function drawButtons(){
   BTNctx.clearRect(cWidth/2-btnSize*2,0,btnSize*5,btncHeight);//clears previously drawn btns
   displayBalance()
@@ -233,20 +248,29 @@ function drawButtons(){
 
   if(insuranceOpt){
     clearTutorialBtn()
+    if(strategyCard){drawBtnImg('Reveal Card'); writeBtnMsg('Reveal Card', 'Help');}
     strokeAndFillText(gctx,'Insurance?',cWidth/2,cHeight/2,cWidth*0.9);
     drawBtnImg('Yes'); drawBtnImg('No');
     writeBtnMsg('Yes'); writeBtnMsg('No');
   }else if(checkingCard){
     clearTutorialBtn()
+    //drawBtnImg('Reveal Card'); writeBtnMsg('Reveal Card', 'Help');
     writeCheckingCardsMsg();
   }else if(playingGame){
     clearTutorialBtn()
+    if(strategyCard){drawBtnImg('Reveal Card'); writeBtnMsg('Reveal Card', 'Help');}
     drawBtnImg('Hit'); drawBtnImg('Stand');
     writeBtnMsg('Hit'); writeBtnMsg('Stand');
     if(pHand.cards.length==2){
       drawDoubleAndSurrenderBtn();
       if(pHand.cards[0][0]==pHand.cards[1][0]&&pHandsArr.length<splitUpTo){
-        drawSplitBtn();
+        if (pHand.cards[0].length <= 2){
+          drawSplitBtn();
+        } else {
+          if (pHand.cards[0][0]==pHand.cards[1][0] && pHand.cards[0][1]==pHand.cards[1][1]){
+            drawSplitBtn();
+          }
+        }
       }
     } 
     
@@ -338,12 +362,16 @@ function checkBalance(amt){
 
 const balFontSize = Math.floor(btncHeight/3);
 function displayBalance(){
-  let xPos = Math.floor(cWidth*0.825) +100;
+  let xPos = Math.floor(cWidth*0.85) ;
   BTNctx.textAlign = 'center';
   BTNctx.font= balFontSize+'px TheBlacklist';
-  BTNctx.clearRect(cWidth*0.75+100,0,cWidth*0.25,btncHeight);
+  BTNctx.clearRect(cWidth*0.76,0,cWidth*0.25,btncHeight);
   BTNctx.fillText('Balance',xPos-50,btncHeight*0.3);
   BTNctx.fillText(account.balance,xPos,btncHeight*0.7);
+  if (!playingGame){
+    drawPlayBetBtns()
+  }
+  
 }
 
 function drawChipButtons(){

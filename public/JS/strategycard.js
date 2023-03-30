@@ -63,13 +63,13 @@ function playerCardRow(cards, total){
 function getMessage(player, total, dealer){
     var decision = strategy_card[playerCardRow(player, total)][dealerColumn(dealer[1])]
     if (decision == "H"){
-        return "You should have Hit"
+        return "Hit"
     }
     else if (decision == "P"){
-        return "You should have Split"
+        return "Split"
     }
     else if (decision == "S"){
-        return "You should have Stand"
+        return "Stand"
     }
-    return "You should have Double Down"
+    return "Double Down"
 }

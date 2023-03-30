@@ -9,6 +9,7 @@ let insuranceOpt = false;
 let checkingCard = false;
 let strategyCard = false;
 let beginning = true; 
+let displayedStrat = false
 
 function Hand(cards=[], val=0, nAces=0){
   this.cards = cards;
@@ -47,9 +48,10 @@ function newGame(){
       checkingCard = true;
       glassBtnCanvas.style.zIndex = -1;
       drawButtons();
-    }else if(exposedCardVal=='1'){
-      checkDealerBlackJack();
-    }else{
+    }//else if(exposedCardVal=='1'){
+      //checkDealerBlackJack();
+    //}
+    else{
       playingGame = true;
       checkBlackJack(pHand)
       glassBtnCanvas.style.zIndex = -1;
@@ -198,6 +200,7 @@ function discard(){
   gctx.clearRect(0,0,cWidth,cHeight);
   disctx.clearRect(0,0,cWidth,cHeight);//clears points and pointer
   ctx.clearRect(0,0,cWidth,cHeight);//clears all drawn cards
+  displayedStrat = false
   let rate = 60;
   let wait = Math.floor(rate/6);
   let dCards = dHand.cards;

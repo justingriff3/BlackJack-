@@ -7,7 +7,7 @@ function getMousePos(cvn, evt){
     y: evt.clientY - rect.top
   }
 }
-
+var help = false;
 function isInside(pos, rect){
     return pos.x > rect.x && pos.x < rect.x+rect.w && pos.y < rect.y+rect.h && pos.y > rect.y
 }
@@ -15,7 +15,7 @@ function isInside(pos, rect){
 btnCanvas.addEventListener('click', function(evt){
   let mousePos = getMousePos(btnCanvas,evt);
     if(insuranceOpt===true){
-      if(isInside(mousePos,optionButtonsMap.get('Yes'))){
+      /*if(isInside(mousePos,optionButtonsMap.get('Yes'))){
         gctx.clearRect(0,0,cWidth,cHeight);
         console.log('yes clicked');
         if(checkBalance(account.bet/2)){
@@ -25,9 +25,9 @@ btnCanvas.addEventListener('click', function(evt){
         gctx.clearRect(0,0,cWidth,cHeight);
         console.log('no clicked');
         checkDealerBlackJack();
-      }
+      }*/
     }else{
-      gctx.clearRect(0,cHeight*0.3,cWidth,cHeight*0.5);//in case insufficient balance is displayed
+      gctx.clearRect(0,cHeight*0.3,cWidth,cHeight*0.6);//in case insufficient balance is displayed
       if(beginning == true){
         displayBalance();
         drawChipButtons();
@@ -53,15 +53,23 @@ btnCanvas.addEventListener('click', function(evt){
                 }
               }
               else if(isInside(mousePos,optionButtonsMap.get('Surrender'))){surrender(pHand);}
-              else if(pHand.cards[0][0]==pHand.cards[1][0]&&isInside(mousePos,optionButtonsMap.get('Split'))){
-                if(checkBalance(account.bet)){
-                  split();
+              else if(pHand.cards[0][0]==pHand.cards[1][0] &&isInside(mousePos,optionButtonsMap.get('Split'))){
+                if (pHand.cards[0].length <= 2){
+                  if(checkBalance(account.bet)){
+                    split();
+                  }
+                } else{
+                  if (pHand.cards[0][0]==pHand.cards[1][0] && pHand.cards[0][1]==pHand.cards[1][1]){
+                    if(checkBalance(account.bet)){
+                      split();
+                    }
+                  }
                 }
               }
             }
             if(!isInside(mousePos,optionButtonsMap.get('Split'))){displayPointer();}
         } else {
-          console.log(getMessage(pHand.cards, pHand.value, dHand.cards))
+          console.log("Playing")
           if(isInside(mousePos,optionButtonsMap.get('Hit'))){
             hit(pHand,0,curHand,true,()=>{
               if(pHand.value<21){glassBtnCanvas.style.zIndex = -1;}
@@ -78,22 +86,41 @@ btnCanvas.addEventListener('click', function(evt){
               }
             }
             else if(isInside(mousePos,optionButtonsMap.get('Surrender'))){surrender(pHand);}
-            else if(pHand.cards[0][0]==pHand.cards[1][0]&&isInside(mousePos,optionButtonsMap.get('Split'))){
-              if(checkBalance(account.bet)){
-                split();
+            else if(pHand.cards[0][0]==pHand.cards[1][0] &&isInside(mousePos,optionButtonsMap.get('Split'))){
+              if (pHand.cards[0].length < 3){
+                if(checkBalance(account.bet)){
+                  split();
+                }
+              } else{
+                if (pHand.cards[0][0]==pHand.cards[1][0] && pHand.cards[0][1]==pHand.cards[1][1]){
+                  if(checkBalance(account.bet)){
+                    split();
+                  }
+                }
               }
+            } else if(isInside(mousePos, optionButtonsMap.get("Reveal Card"))){
+              help = true;
+              displayMessage();
             }
+          } else {
+            console.log("Ignored");
+            displayMessage();
           }
-          if(!isInside(mousePos,optionButtonsMap.get('Split'))){displayPointer();}
+          
+          if(!isInside(mousePos,optionButtonsMap.get('Split'))){
+            displayPointer();
+          }
         }
         }else{
+          console.log("Not Playing")
           //options for new hand
           if(isInside(mousePos,optionButtonsMap.get('Play'))&&account.bet>=minBet){
             if(checkBalance(account.bet)){
               glassBtnCanvas.style.zIndex = 99;
               playingGame = true;
-              if(rebet===true){rebetChip(()=>{newGame();});}
-              else{newGame();
+              if(rebet===true){rebetChip(()=>{ ctx.clearRect(0,0,cWidth,cHeight); newGame();});}
+              else{ ctx.clearRect(0,0,cWidth,cHeight);//clears all drawn cards
+              newGame();
               account.balance-=account.bet;}
               displayBalance();
             }
@@ -108,6 +135,9 @@ btnCanvas.addEventListener('click', function(evt){
               console.log("Strategy Card Off");
             }
             drawPlayBetBtns()
+          } else if(isInside(mousePos, optionButtonsMap.get("Reveal Card"))){
+            //Should Reveal Strategy Card TODO
+            
           }else if(rebet===false){
             if(isInside(mousePos,optionButtonsMap.get('Clear Bet'))){
               pHand.bet = account.bet=0;
